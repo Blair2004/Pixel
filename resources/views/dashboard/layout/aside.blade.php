@@ -13,40 +13,41 @@
       </div>
       <div data-flex class="hide-scroll">
           <nav class="scroll nav-stacked nav-stacked-rounded nav-color">
-            
             <ul class="nav" data-ui-nav>
+              @foreach( $menus as $namespace => $menu ) 
               <li>
-                <a href="{{ url( 'dashboard' ) }}">
-                  <span class="nav-icon text-white no-fade">
-                    <i class="material-icons md-24">dashboard</i>
+                
+                <a href="{{ @$menu[ 'url' ] != null ? $menu[ 'url' ] : "javascript:void(0)" }}" class="{{ $namespace }}-menu">
+
+                  @if( count( @$menu[ 'sub' ] ) > 0 ) 
+                  <span class="nav-caret">
+                    <i class="fa fa-caret-down"></i>
                   </span>
-                  <span class="nav-text">Dashboard</span>
+                  @endif
+
+                  <span class="nav-icon text-white no-fade">
+                      <i class="material-icons md-24">{{ $menu[ 'icon' ] }}</i>
+                  </span>
+
+                  <span class="nav-text">{{ @$menu[ 'text' ] }}</span>
+
+                  @if( isset( $menu[ 'sub' ] ) && count( @$menu[ 'sub' ] ) > 0 )
+                    
+                    <ul class="nav-sub nav-mega nav-mega-3">
+                    <!-- Looping Sub Menus -->
+                    @foreach( $menu[ 'sub' ] as $subNamespace => $sub ) 
+                      <li>
+                        <a class="{{ $subNamespace }}-submenu" href="{{ @$sub[ 'url' ] ? $sub[ 'url' ] : 'javascript:void(0)' }}" >{{ $sub[ 'text' ] }}</a>
+                      </li>
+                    @endforeach
+                    <!-- End Sub Menus -->
+                    </ul>
+
+                  @endif
+
                 </a>
               </li>
-              <li>
-                <a href="{{ url( 'dashboard/modules' ) }}">
-                  <span class="nav-icon text-white no-fade">
-                    <i class="material-icons md-24">apps</i>
-                  </span>
-                  <span class="nav-text">Modules</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ url( 'dashboard/users' ) }}">
-                  <span class="nav-icon text-white no-fade">
-                    <i class="material-icons md-24">people</i>
-                  </span>
-                  <span class="nav-text">Users</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ url( 'dashboard/settings' ) }}">
-                  <span class="nav-icon text-white no-fade">
-                    <i class="material-icons md-24">settings</i>
-                  </span>
-                  <span class="nav-text">Settings</span>
-                </a>
-              </li>
+              @endforeach
             </ul>
           </nav>
       </div>

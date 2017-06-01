@@ -11,6 +11,7 @@ class dashboardController extends Controller
     public function __construct()
     {
         $this->data         =   new \stdClass;
+        $this->data->menus  =   config( 'dashboard.menus' );
     }
 
     public function index()
